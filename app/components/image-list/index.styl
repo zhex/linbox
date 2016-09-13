@@ -1,0 +1,42 @@
+.image-list
+	margin 0
+	padding 0
+
+	li
+		position relative
+		display inline-block
+		width 100px
+		height @width
+		margin 5px
+		border 1px solid #ccc
+		cursor pointer
+
+		img
+			display block
+
+		&.add
+			background url('./plus.png') no-repeat
+			background-size 50%
+			background-position center
+			opacity .5
+			border-style dashed
+
+		a.remove
+			position absolute
+			display none
+			width 20px
+			font-size 18px
+			text-align center
+			height @width
+			top  ( @width * -1 / 2 )
+			right @top
+			border-radius 50%
+			background #555
+			color white
+			line-height 1
+
+		&:hover
+			&.add
+				opacity .7
+			a.remove
+				display block
