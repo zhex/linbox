@@ -1,8 +1,11 @@
 import './index.styl';
 import React, { Component } from 'react';
-import ImageList from 'components/image-list';
 import moment from 'moment';
 import { ipcRenderer } from 'electron';
+
+import ImageList from 'components/image-list';
+import SearchPane from 'components/search-pane';
+import Overlay from 'components/overlay';
 
 class App extends Component {
 	constructor() {
@@ -16,12 +19,46 @@ class App extends Component {
 				'https://gdp.alicdn.com/imgextra/i1/1056114842/TB2N39ItFXXXXabXpXXXXXXXXXX_!!1056114842.jpg',
 				'https://gdp.alicdn.com/imgextra/i1/1056114842/TB2N39ItFXXXXabXpXXXXXXXXXX_!!1056114842.jpg',
 				'https://gdp.alicdn.com/imgextra/i3/1056114842/TB2yt_ctFXXXXa7XXXXXXXXXXXX_!!1056114842.jpg'
-			]
+			],
+			showSearchPane: false
 		};
 	}
 
+	render() {
+		return (
+			<div className="wrapper">
+				<div className="main">
+					<section className="row">
+						<div className="col">
+							<label>活动时间</label>
+							<input type="text" defaultValue={this.state.date} />
+						</div>
+
+						<div className="col">
+							<label>开始时间</label>
+							<input type="text" defaultValue={this.state.time} />
+						</div>
+					</section>
+
+					<p>活动商品</p>
+					<ImageList
+						images={this.state.imgs}
+						onAdd={this.add.bind(this)}
+						onRemove={this.remove.bind(this)} />
+				</div>
+
+				<Overlay
+					show={this.state.showSearchPane}
+					onClick={this.closeSearchPane.bind(this)} />
+				<SearchPane
+					show={this.state.showSearchPane}
+					onAddImages={this.onAddImages.bind(this)} />
+			</div>
+		);
+	}
+
 	add() {
-		ipcRenderer.send('open:search');
+		this.setState({showSearchPane: true});
 	}
 
 	remove(img) {
@@ -31,28 +68,17 @@ class App extends Component {
 		this.setState({imgs: imgs});
 	}
 
-	render() {
-		return (
-			<div className="wrapper">
-				<section className="row">
-					<div className="col">
-						<label>活动时间</label>
-						<input type="text" defaultValue={this.state.date} />
-					</div>
+	closeSearchPane() {
+		this.setState({showSearchPane: false});
+	}
 
-					<div className="col">
-						<label>开始时间</label>
-						<input type="text" defaultValue={this.state.time} />
-					</div>
-				</section>
+	onAddImages(imgs) {
+		let newImages = this.state.imgs.slice(0);
+		this.setState({
+			imgs: newImages.concat(imgs),
+			showSearchPane: false
+		});
 
-				<p>活动商品</p>
-				<ImageList
-					images={this.state.imgs}
-					onAdd={this.add.bind(this)}
-					onRemove={this.remove.bind(this)} />
-			</div>
-		);
 	}
 }
 

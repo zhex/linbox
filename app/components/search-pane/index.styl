@@ -1,0 +1,47 @@
+.search-pane
+	position: absolute
+	bottom 0
+	left 0
+	right 0
+	height 95vh
+	background #fff
+	box-shadow 0 -3px 15px #888
+	transition all .5s
+	padding 20px
+	overflow-y auto
+
+	&.hidden
+		transform translateY(120%)
+
+
+.input-box
+	margin-bottom 30px
+
+	input
+		width 83%
+		margin-right 2%
+
+	button
+		width 15%
+		font-size 16px
+		padding 6px 5px 5px
+		border none
+		background blue
+		color white
+
+.image-section.hidden
+	display none
+
+.item-images
+	li
+		display inline-block
+		margin 5px
+		border 1px solid #ccc
+		width 100px
+		height @width
+
+		&.selected
+			border 3px solid green
+
+		img
+			width 100%

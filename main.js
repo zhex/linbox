@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const fetchor = require('./utils/fetchor');
 
 let wins = {};
 
@@ -9,7 +10,7 @@ function createWindow() {
 		resizable: false,
 		show: false
 	});
-	win.loadURL(`file://${__dirname}/index.html`);
+	win.loadURL(`file://${__dirname}/templates/index.html`);
 
 	win.once('ready-to-show', () => win.show() );
 	win.on('closed', () => win = null);
@@ -27,22 +28,27 @@ app.on('activate', () => {
 	if (wins.main === null) createWindow();
 });
 
-ipcMain.on('open:search', () => {
-	// if (wins.search) {
-	// 	wins.search.focus();
-	// } else {
-	// 	const bounds = wins.main.getBounds();
-	// 	let search = new BrowserWindow({
-	// 		width: 400,
-	// 		height: 600,
-	// 		x: bounds.width + bounds.x - 200,
-	// 		y: bounds.y + 100,
-	// 	});
-	// 	search.loadURL(`file://${__dirname}/index.html`);
-	// 	search.on('closed', () => wins.search = null);
-
-	// 	wins.search = search;
-	// }
-	wins.main.setSize(800, 600, true);
-
+ipcMain.on('search:item', (e, url) => {
+	fetchor.getImagesFromPage(url).then((imgs) => {
+		e.sender.send('find:item', imgs);
+	});
 });
+
+// ipcMain.on('open:search', () => {
+// 	if (wins.search) {
+// 		wins.search.focus();
+// 	} else {
+// 		const bounds = wins.main.getBounds();
+// 		let search = new BrowserWindow({
+// 			width: 400,
+// 			height: 600,
+// 			x: bounds.width + bounds.x - 200,
+// 			y: bounds.y + 100,
+// 		});
+// 		search.loadURL(`file://${__dirname}/templates/search.html`);
+// 		search.on('closed', () => wins.search = null);
+
+// 		wins.search = search;
+// 	}
+
+// });
