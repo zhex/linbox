@@ -3,6 +3,7 @@ const fetchor = require('./utils/fetchor');
 const generator = require('./utils/generator');
 
 let wins = {};
+let rawHtml;
 
 function createWindow() {
 	let win = new BrowserWindow({
@@ -37,25 +38,30 @@ ipcMain.on('search:item', (e, url) => {
 
 ipcMain.on('build', (e, data) => {
 	generator.build('tb-rush', data).then((html) => {
+		rawHtml = html;
 		clipboard.writeText(html);
+		openPreview();
 	});
 });
 
-// ipcMain.on('open:search', () => {
-// 	if (wins.search) {
-// 		wins.search.focus();
-// 	} else {
-// 		const bounds = wins.main.getBounds();
-// 		let search = new BrowserWindow({
-// 			width: 400,
-// 			height: 600,
-// 			x: bounds.width + bounds.x - 200,
-// 			y: bounds.y + 100,
-// 		});
-// 		search.loadURL(`file://${__dirname}/templates/search.html`);
-// 		search.on('closed', () => wins.search = null);
+ipcMain.on('fetch:html', (e) => {
+	e.sender.send('push:html', rawHtml);
+});
 
-// 		wins.search = search;
-// 	}
+function openPreview() {
+	if (wins.preview) {
+		wins.preview.focus();
+	} else {
+		const bounds = wins.main.getBounds();
+		let preview = new BrowserWindow({
+			width: 980,
+			height: 700,
+			x: bounds.width + bounds.x - 200,
+			y: bounds.y + 100,
+		});
+		preview.loadURL(`file://${__dirname}/views/preview.html`);
+		preview.on('closed', () => wins.preview = null);
 
-// });
+		wins.preview = preview;
+	}
+}
