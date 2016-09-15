@@ -10,7 +10,7 @@ class SearchPane extends Component {
 		super()
 		this.state = { imgs: [], selected: [], loading: false };
 
-		this.selected = [];
+		this._imgs = [];
 
 		ipcRenderer.on('find:item', (e, imgs) => this.setState({ imgs, loading: false }) );
 	}
@@ -19,6 +19,7 @@ class SearchPane extends Component {
 		if (!nextProps.show) {
 			this.setState({ imgs: [], selected: [] });
 			this.refs.searchText.value = '';
+			this._imgs = [];
 		}
 	}
 
@@ -48,7 +49,7 @@ class SearchPane extends Component {
 					<ul className="item-images">
 						{ this.state.imgs.map((img, idx) => {
 							let klass = classnames({
-								selected: this.state.selected.indexOf(img) >= 0
+								selected: this._imgs.indexOf(img) >= 0
 							});
 							return (
 								<li className={klass}
@@ -69,19 +70,31 @@ class SearchPane extends Component {
 	}
 
 	doSearch() {
-		this.setState({loading: true});
-		ipcRenderer.send('search:item', this.refs.searchText.value);
+		this.id = this.findItemId(this.refs.searchText.value);
+
+		if (this.id) {
+			this.setState({loading: true});
+			ipcRenderer.send('search:item', this.refs.searchText.value);
+		}
 	}
 
 	selectImage(img) {
-		let selected = this.state.selected.slice(0);
-		selected.push(img);
-		this.setState({ selected });
+		if (this._imgs.indexOf(img) < 0) {
+			let selected = this.state.selected.slice(0);
+			selected.push({ id: this.id, url: img });
+			this._imgs.push(img);
+			this.setState({ selected });
+		}
 	}
 
 	addImages() {
 		if (this.props.onAddImages)
 			this.props.onAddImages(this.state.selected);
+	}
+
+	findItemId(url) {
+		const match = url.match(/[\?&]id=([^&]*)/i);
+		return match ? match[1]: null;
 	}
 }
 

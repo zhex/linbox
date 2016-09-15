@@ -3,25 +3,25 @@ import React, { Component } from 'react';
 
 const protoTypes = {};
 
-class ImageList extends Component {
+class ItemList extends Component {
 	static prototypes: protoTypes;
 
 	add() {
 		if (this.props.onAdd) this.props.onAdd();
 	}
 
-	remove(img) {
-		if (this.props.onRemove) this.props.onRemove(img);
+	remove(item) {
+		if (this.props.onRemove) this.props.onRemove(item);
 	}
 
 	render() {
 		return (
-			<ul className="image-list">
-				{ this.props.images.map((img, idx) => {
+			<ul className="item-list">
+				{ this.props.items.map((item, idx) => {
 					return (
 						<li key={idx}>
-							<img src={img + '_100x100.jpg'} />
-							<a className="remove" onClick={ this.remove.bind(this, img) }>&times;</a>
+							<img src={item.url + '_100x100.jpg'} />
+							<a className="remove" onClick={ this.remove.bind(this, item) }>&times;</a>
 						</li>
 					);
 				}) }
@@ -31,4 +31,4 @@ class ImageList extends Component {
 	}
 }
 
-export default ImageList;
+export default ItemList;

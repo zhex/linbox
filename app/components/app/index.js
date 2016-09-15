@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { ipcRenderer } from 'electron';
 
-import ImageList from 'components/image-list';
+import ItemList from 'components/item-list';
 import SearchPane from 'components/search-pane';
 import Overlay from 'components/overlay';
 
@@ -13,7 +13,7 @@ class App extends Component {
 		this.state = {
 			date: moment().format('M月D日'),
 			time: '11:00',
-			imgs: [],
+			items: [],
 			showSearchPane: false
 		};
 	}
@@ -35,10 +35,12 @@ class App extends Component {
 					</section>
 
 					<p>活动商品</p>
-					<ImageList
-						images={this.state.imgs}
+					<ItemList
+						items={this.state.items}
 						onAdd={this.add.bind(this)}
 						onRemove={this.remove.bind(this)} />
+
+					<button onClick={this.buildHTML.bind(this)}>生成代码</button>
 				</div>
 
 				<Overlay
@@ -55,24 +57,31 @@ class App extends Component {
 		this.setState({showSearchPane: true});
 	}
 
-	remove(img) {
-		let imgs = this.state.imgs.slice(0);
-		let idx = imgs.indexOf(img);
-		imgs.splice(idx, 1);
-		this.setState({imgs: imgs});
+	remove(item) {
+		let items = this.state.items.slice(0);
+		let idx = items.indexOf(item);
+		items.splice(idx, 1);
+		this.setState({ items });
 	}
 
 	closeSearchPane() {
 		this.setState({showSearchPane: false});
 	}
 
-	onAddImages(imgs) {
-		let newImages = this.state.imgs.slice(0);
+	onAddImages(items) {
+		let newItems = this.state.items.slice(0);
 		this.setState({
-			imgs: newImages.concat(imgs),
+			items: newItems.concat(items),
 			showSearchPane: false
 		});
+	}
 
+	buildHTML() {
+		ipcRenderer.send('preview', {
+			date: this.state.date,
+			time: this.state.time,
+			items: this.state.items
+		});
 	}
 }
 

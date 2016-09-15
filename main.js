@@ -1,5 +1,6 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, clipboard } = require('electron');
 const fetchor = require('./utils/fetchor');
+const generator = require('./utils/generator');
 
 let wins = {};
 
@@ -10,7 +11,7 @@ function createWindow() {
 		resizable: false,
 		show: false
 	});
-	win.loadURL(`file://${__dirname}/templates/index.html`);
+	win.loadURL(`file://${__dirname}/views/index.html`);
 
 	win.once('ready-to-show', () => win.show() );
 	win.on('closed', () => win = null);
@@ -31,6 +32,13 @@ app.on('activate', () => {
 ipcMain.on('search:item', (e, url) => {
 	fetchor.getImagesFromPage(url).then((imgs) => {
 		e.sender.send('find:item', imgs);
+	});
+});
+
+ipcMain.on('preview', (e, data) => {
+	generator.build('tb-rush', data).then((html) => {
+		console.log(html);
+		clipboard.writeText(html);
 	});
 });
 

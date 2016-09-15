@@ -1,0 +1,20 @@
+<div class="weekly-rush">
+	<p class="heading"><%= date %>上新开抢 - RUSH</p>
+	<p>
+		<%= time %> 准时起拍，下列宝贝每款第一位拍下的直接<em>9折</em>
+		<br />
+		24小时内不付款自动关闭交易
+	</p>
+
+	<ul class="item-list">
+		<% for (var i=0; i<items.length; i++) { %>
+			<li>
+				<a style="background-image: url(<%= items[i].url + '_300x300.jpg' %>);"
+				   href="http://item.taobao.com/item.htm?id=<%= items[i].id %>"
+				   title="" target="_blank"></a>
+			</li>
+		<% } %>
+	</ul>
+
+	<div class="clearfix"></div>
+</div>

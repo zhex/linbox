@@ -1,0 +1,39 @@
+.weekly-rush
+	margin 0 auto 40px
+
+	p
+		font-size 18px
+		color #777
+		text-align center
+		margin 0 0 20px
+
+	p.heading
+		font-size 30px
+		margin-bottom 0
+		font-weight bold
+		color #333
+
+	em
+		color red
+
+	ul.item-list
+		margin 0
+		padding 0
+
+		li
+			margin-top 13px
+			margin-left 13px
+			padding 0
+			float left
+
+			a
+				position relative
+				display block
+				width 300px
+				height @width
+				overflow hidden
+				background-position center
+				background-repeat no-repeat
+
+.clearfix
+	clear both
