@@ -1,7 +1,8 @@
 const path = require('path');
+const webpack = require('webpack');
 const ExtractPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
+let config = {
 	entry: {
 		main: path.resolve('app/main')
 	},
@@ -30,3 +31,11 @@ module.exports = {
 		electron: 'require("electron")'
 	}
 };
+
+if (process.env.NODE_ENV === 'production') {
+	config.plugins = config.plugins.concat(
+		new webpack.optimize.UglifyJsPlugin({ output: { comments: false }})
+	);
+}
+
+module.exports = config;
