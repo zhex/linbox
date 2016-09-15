@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build-mac": "node build-script.js"
+    "build-mac": "NODE_ENV=production webpack && node build-script.js"
   },
   "dependencies": {
     "cheerio": "^0.22.0",

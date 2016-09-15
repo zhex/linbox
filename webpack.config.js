@@ -34,8 +34,14 @@ let config = {
 
 if (process.env.NODE_ENV === 'production') {
 	config.plugins = config.plugins.concat(
+		new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.UglifyJsPlugin({ output: { comments: false }})
 	);
+	config.resolve.alias = {
+		moment: path.resolve('node_modules/moment/min/moment.min.js'),
+		react: path.resolve('node_modules/react/dist/react.min.js'),
+		'react-dom': path.resolve('node_modules/react-dom/dist/react-dom.min.js')
+	};
 }
 
 module.exports = config;
