@@ -51,13 +51,14 @@ ipcMain.on('fetch:html', (e) => {
 function openPreview() {
 	if (wins.preview) {
 		wins.preview.focus();
+		wins.preview.reload();
 	} else {
 		const bounds = wins.main.getBounds();
 		let preview = new BrowserWindow({
 			width: 980,
 			height: 700,
 			x: bounds.width + bounds.x - 200,
-			y: bounds.y + 100,
+			y: bounds.y + 30,
 		});
 		preview.loadURL(`file://${__dirname}/views/preview.html`);
 		preview.on('closed', () => wins.preview = null);
