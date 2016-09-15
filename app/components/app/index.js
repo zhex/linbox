@@ -13,13 +13,7 @@ class App extends Component {
 		this.state = {
 			date: moment().format('M月D日'),
 			time: '11:00',
-			imgs: [
-				'https://gdp.alicdn.com/imgextra/i4/1056114842/TB2QoeXaWm5V1Bjy1zeXXcTCFXa_!!1056114842.jpg',
-				'https://gdp.alicdn.com/imgextra/i4/1056114842/TB2QoeXaWm5V1Bjy1zeXXcTCFXa_!!1056114842.jpg',
-				'https://gdp.alicdn.com/imgextra/i1/1056114842/TB2N39ItFXXXXabXpXXXXXXXXXX_!!1056114842.jpg',
-				'https://gdp.alicdn.com/imgextra/i1/1056114842/TB2N39ItFXXXXabXpXXXXXXXXXX_!!1056114842.jpg',
-				'https://gdp.alicdn.com/imgextra/i3/1056114842/TB2yt_ctFXXXXa7XXXXXXXXXXXX_!!1056114842.jpg'
-			],
+			imgs: [],
 			showSearchPane: false
 		};
 	}
@@ -30,7 +24,7 @@ class App extends Component {
 				<div className="main">
 					<section className="row">
 						<div className="col">
-							<label>活动时间</label>
+							<label>活动日期</label>
 							<input type="text" defaultValue={this.state.date} />
 						</div>
 

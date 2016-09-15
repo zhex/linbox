@@ -5,14 +5,14 @@
 	right 0
 	height 95vh
 	background #fff
-	box-shadow 0 -3px 15px #888
+	box-shadow 0 -3px 15px #333
 	transition all .5s
 	padding 20px
 	overflow-y auto
 
 	&.hidden
+		display block
 		transform translateY(120%)
-
 
 .input-box
 	margin-bottom 30px
@@ -29,8 +29,29 @@
 		background blue
 		color white
 
-.image-section.hidden
-	display none
+.image-section
+	.button-section
+		position fixed
+		left 0
+		right 0
+		bottom 0
+		height 50px
+		background rgba(0,0,0, .7)
+		text-align right
+		padding 10px 10px
+
+		button
+			font-size 16px
+			padding 6px 15px 5px
+			border none
+			background green
+			color white
+			border-radius 4px
+			border-right 1px solid darken(green, 10%)
+			border-bottom 1px solid darken(green, 20%)
+			letter-spacing 4px
+			text-align center
+			cursor pointer
 
 .item-images
 	li
@@ -39,6 +60,7 @@
 		border 1px solid #ccc
 		width 100px
 		height @width
+		cursor pointer
 
 		&.selected
 			border 3px solid green

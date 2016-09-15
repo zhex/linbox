@@ -3,16 +3,16 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import { ipcRenderer } from 'electron';
 
+import loadingImage from './loading.gif';
+
 class SearchPane extends Component {
 	constructor() {
 		super()
-		this.state = { imgs: [], selected: [] };
+		this.state = { imgs: [], selected: [], loading: false };
 
 		this.selected = [];
 
-		ipcRenderer.on('find:item', (e, imgs) => {
-			this.setState({ imgs });
-		});
+		ipcRenderer.on('find:item', (e, imgs) => this.setState({ imgs, loading: false }) );
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -31,6 +31,8 @@ class SearchPane extends Component {
 			hidden: !this.state.imgs.length
 		});
 
+		let loading = classnames({hidden: !this.state.loading});
+
 		return (
 			<div className={classes}>
 				<p>请输入您的商品链接</p>
@@ -39,6 +41,8 @@ class SearchPane extends Component {
 					<input ref="searchText" type="text" />
 					<button onClick={this.doSearch.bind(this)}>确定</button>
 				</div>
+
+				<img className={loading} src={loadingImage} />
 
 				<div className={imgSecClass}>
 					<ul className="item-images">
@@ -56,13 +60,16 @@ class SearchPane extends Component {
 						}) }
 					</ul>
 
-					<button onClick={this.addImages.bind(this)}>添加</button>
+					<div className="button-section">
+						<button onClick={this.addImages.bind(this)}>添加</button>
+					</div>
 				</div>
 			</div>
 		);
 	}
 
 	doSearch() {
+		this.setState({loading: true});
 		ipcRenderer.send('search:item', this.refs.searchText.value);
 	}
 
