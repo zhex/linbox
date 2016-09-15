@@ -40,7 +40,9 @@ class App extends Component {
 						onAdd={this.add.bind(this)}
 						onRemove={this.remove.bind(this)} />
 
-					<button onClick={this.buildHTML.bind(this)}>生成代码</button>
+					<div className="button-section">
+						<button className="build" onClick={this.buildHTML.bind(this)}>生成代码并复制</button>
+					</div>
 				</div>
 
 				<Overlay
@@ -77,7 +79,7 @@ class App extends Component {
 	}
 
 	buildHTML() {
-		ipcRenderer.send('preview', {
+		ipcRenderer.send('build', {
 			date: this.state.date,
 			time: this.state.time,
 			items: this.state.items

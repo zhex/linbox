@@ -35,9 +35,8 @@ ipcMain.on('search:item', (e, url) => {
 	});
 });
 
-ipcMain.on('preview', (e, data) => {
+ipcMain.on('build', (e, data) => {
 	generator.build('tb-rush', data).then((html) => {
-		console.log(html);
 		clipboard.writeText(html);
 	});
 });
