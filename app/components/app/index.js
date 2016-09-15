@@ -25,7 +25,10 @@ class App extends Component {
 	}
 
 	remove(img) {
-		console.log(img);
+		let imgs = this.state.imgs.slice(0);
+		let idx = imgs.indexOf(img);
+		imgs.splice(idx, 1);
+		this.setState({imgs: imgs});
 	}
 
 	render() {
@@ -44,7 +47,10 @@ class App extends Component {
 				</section>
 
 				<p>活动商品</p>
-				<ImageList images={this.state.imgs} onAdd={this.add} onRemove={this.remove} />
+				<ImageList
+					images={this.state.imgs}
+					onAdd={this.add.bind(this)}
+					onRemove={this.remove.bind(this)} />
 			</div>
 		);
 	}

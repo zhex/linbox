@@ -7,11 +7,11 @@ class ImageList extends Component {
 	static prototypes: protoTypes;
 
 	add() {
-		if (this.props.onAdd) this.props.onAdd.call(this);
+		if (this.props.onAdd) this.props.onAdd();
 	}
 
 	remove(img) {
-		if (this.props.onRemove) this.props.onRemove.call(this, img);
+		if (this.props.onRemove) this.props.onRemove(img);
 	}
 
 	render() {
