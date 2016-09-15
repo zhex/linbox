@@ -1,9 +1,12 @@
 {
   "name": "linbox",
+  "description": "Desktop client for generate taobao promotion section template",
   "version": "1.0.0",
+  "author": "ZheX <zhex81@gmail.com>",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build-mac": "electron-packager . Linbox --out=./build --platform=darwin --arch=x64 --version=1.4.0"
   },
   "dependencies": {
     "cheerio": "^0.22.0",
@@ -21,6 +24,8 @@
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "css-loader": "^0.25.0",
+    "electron": "^1.4.0",
+    "electron-packager": "^8.0.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "image-webpack-loader": "^2.0.0",
     "stylus": "^0.54.5",
