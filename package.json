@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build-mac": "electron-packager . Linbox --out=./build --platform=darwin --arch=x64 --version=1.4.0"
+    "build-mac": "node build-script.js"
   },
   "dependencies": {
     "cheerio": "^0.22.0",
