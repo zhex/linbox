@@ -79,12 +79,17 @@ class SearchPane extends Component {
 	}
 
 	selectImage(img) {
-		if (this._imgs.indexOf(img) < 0) {
-			let selected = this.state.selected.slice(0);
+		let selected = this.state.selected.slice(0);
+		let idx = this._imgs.indexOf(img);
+
+		if (idx < 0) {
 			selected.push({ id: this.id, url: img });
 			this._imgs.push(img);
-			this.setState({ selected });
+		} else {
+			this._imgs.splice(idx, 1);
+			selected = selected.filter(item => item.url !== img);
 		}
+		this.setState({ selected });
 	}
 
 	addImages() {
