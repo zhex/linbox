@@ -1,9 +1,24 @@
-const { app, BrowserWindow, ipcMain, clipboard } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, clipboard } = require('electron');
 const fetchor = require('./utils/fetchor');
 const generator = require('./utils/generator');
 
 let wins = {};
 let rawHtml;
+
+const template = [{
+	label: 'Edit',
+	submenu: [
+		{ role: 'undo' },
+		{ role: 'redo' },
+		{ type: 'separator' },
+		{ role: 'cut' },
+		{ role: 'copy' },
+		{ role: 'paste' },
+		{ role: 'pasteandmatchstyle' },
+		{ role: 'delete' },
+		{ role: 'selectall' }
+    ]
+}];
 
 function createWindow() {
 	let win = new BrowserWindow({
@@ -20,7 +35,12 @@ function createWindow() {
 	wins.main = win;
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+	const menu = Menu.buildFromTemplate(template);
+	Menu.setApplicationMenu(menu);
+
+	createWindow();
+});
 
 app.on('window-all-closed', () => {
 	if (process.platform !== 'dawin') app.quit();
