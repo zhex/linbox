@@ -20,6 +20,24 @@ const template = [{
     ]
 }];
 
+if (process.platform === 'darwin') {
+	const name = app.getName();
+	template.unshift({
+		label: name,
+		submenu: [
+			{ role: 'about' },
+			{ type: 'separator' },
+			{ role: 'services', submenu: [] },
+			{ type: 'separator' },
+			{ role: 'hide' },
+			{ role: 'hideothers' },
+			{ role: 'unhide' },
+			{ type: 'separator' },
+			{ role: 'quit' }
+		]
+	});
+};
+
 function createWindow() {
 	let win = new BrowserWindow({
 		width: 400,
