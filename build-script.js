@@ -6,7 +6,8 @@ packager({
 	platform: process.env.PLATFORM === 'win' ? 'win32' : 'darwin',
 	out: __dirname + '/build',
 	ignore: [
-		'app',
+		'app/components',
+		'app/main.js',
 		'.babelrc',
 		'.editorconfig',
 		'.gitignore',
