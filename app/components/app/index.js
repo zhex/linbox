@@ -11,11 +11,11 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-			date: moment().format('M月D日'),
-			time: '11:00',
 			items: [],
 			showSearchPane: false
 		};
+		this.date = moment().format('M月D日');
+		this.time = '11:00';
 	}
 
 	render() {
@@ -25,12 +25,12 @@ class App extends Component {
 					<section className="row">
 						<div className="col">
 							<label>活动日期</label>
-							<input type="text" defaultValue={this.state.date} />
+							<input ref="dateInput" type="text" defaultValue={this.date} />
 						</div>
 
 						<div className="col">
 							<label>开始时间</label>
-							<input type="text" defaultValue={this.state.time} />
+							<input ref="timeInput" type="text" defaultValue={this.time} />
 						</div>
 					</section>
 
@@ -80,8 +80,8 @@ class App extends Component {
 
 	buildHTML() {
 		ipcRenderer.send('build', {
-			date: this.state.date,
-			time: this.state.time,
+			date: this.refs.dateInput.value,
+			time: this.refs.timeInput.value,
 			items: this.state.items
 		});
 	}
