@@ -32,7 +32,7 @@ let config = {
 	}
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV.replace(/\s+$/, '') === 'production') {
 	config.plugins = config.plugins.concat(
 		new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.UglifyJsPlugin({ output: { comments: false }})

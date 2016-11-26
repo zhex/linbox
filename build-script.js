@@ -3,7 +3,7 @@ const packager = require('electron-packager');
 packager({
 	name: 'Linbox',
 	dir: __dirname,
-	platform: process.env.PLATFORM === 'win' ? 'win32' : 'darwin',
+	platform: process.env.PLATFORM.replace(/\s+$/, '') === 'win' ? 'win32' : 'darwin',
 	out: __dirname + '/build',
 	ignore: [
 		'app/components',
