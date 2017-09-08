@@ -70,12 +70,12 @@ class SearchPane extends Component {
 	}
 
 	doSearch() {
-		this.id = this.findItemId(this.refs.searchText.value);
+// 		this.id = this.findItemId(this.refs.searchText.value);
 
-		if (this.id) {
+// 		if (this.id) {
 			this.setState({loading: true});
 			ipcRenderer.send('search:item', this.refs.searchText.value);
-		}
+// 		}
 	}
 
 	selectImage(img) {
