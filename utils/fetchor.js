@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 
 function getDescUrl(url) {
 	return request(url).then((result) => {
-		const url = /'(\/\/dsc.taobaocdn.com[^']*)/.exec(result);
+		const url = /"(\/\/desc.alicdn.com[^"]*)/.exec(result);
 		return url ? 'http:' + url[1]: null;
 	});
 }
